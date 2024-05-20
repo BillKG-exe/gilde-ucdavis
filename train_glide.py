@@ -198,6 +198,7 @@ def run_glide_finetune(
             epoch=epoch,
             gradient_accumualation_steps=1,
             train_upsample=enable_upsample,
+            min_loss=best_loss,
         )
 
         if loss < best_loss:

@@ -99,6 +99,7 @@ def run_glide_finetune_epoch(
     train_upsample: bool = False,
     upsample_factor=4,
     image_to_upsample='low_res_face.png',
+    min_loss=float('inf'),
 ):
     if train_upsample: train_step = upsample_train_step
     else: train_step = base_train_step
@@ -167,7 +168,11 @@ def run_glide_finetune_epoch(
     wandb_run.log(log)
 
     print(f"Finished training, saving final checkpoint")
-    train_util.save_model(glide_model, checkpoints_dir, train_idx, epoch)
+    if min_loss > log['loss']:
+        best_model_path = os.path.join(checkpoints_dir, 'best_model')
+        train_util.save_model(glide_model, best_model_path, train_idx, epoch)
+    else:
+        train_util.save_model(glide_model, checkpoints_dir, train_idx, epoch)
 
     return epoch_loss / total_training
 

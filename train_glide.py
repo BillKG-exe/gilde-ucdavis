@@ -19,6 +19,7 @@ def run_glide_finetune(
     batch_size=1,
     learning_rate=1e-5,
     adam_weight_decay=0.0,
+    momentum=.8,
     side_x=64,
     side_y=64,
     resize_ratio=1.0,
@@ -141,6 +142,7 @@ def run_glide_finetune(
         [x for x in glide_model.parameters() if x.requires_grad],
         lr=learning_rate,
         weight_decay=adam_weight_decay,
+        betas=(momentum, 0.98),
     )
 
     if not freeze_transformer: # if we want to train the transformer, we need to backpropagate through the diffusion model.
@@ -226,6 +228,7 @@ def parse_args():
     parser.add_argument("--batch_size", "-bs", type=int, default=1)
     parser.add_argument("--learning_rate", "-lr", type=float, default=2e-5)
     parser.add_argument("--adam_weight_decay", "-adam_wd", type=float, default=0.0)
+    parser.add_argument("--momentum", "-moment", type=float, default=0.8)
     parser.add_argument("--side_x", "-x", type=int, default=64)
     parser.add_argument("--side_y", "-y", type=int, default=64)
     parser.add_argument(
@@ -352,6 +355,7 @@ if __name__ == "__main__":
         batch_size=args.batch_size,
         learning_rate=args.learning_rate,
         adam_weight_decay=args.adam_weight_decay,
+        momentum=args.momentum,
         side_x=args.side_x,
         side_y=args.side_y,
         resize_ratio=args.resize_ratio,

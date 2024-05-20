@@ -170,6 +170,7 @@ def run_glide_finetune(
     best_models_ckpt_dir = os.path.join(current_run_ckpt_dir, 'best_models')
 
     os.makedirs(current_run_ckpt_dir, exist_ok=True)
+    os.makedirs(best_models_ckpt_dir, exist_ok=True)
 
     # Keeping track of epochs without improvements
     best_loss = float('inf')

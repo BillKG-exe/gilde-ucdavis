@@ -169,7 +169,7 @@ def run_glide_finetune_epoch(
 
     print(f"Finished training, saving final checkpoint")
     if min_loss > log['loss']:
-        best_model_path = os.path.join(checkpoints_dir, 'best_model')
+        best_model_path = os.path.join(checkpoints_dir, 'best_models')
         train_util.save_model(glide_model, best_model_path, train_idx, epoch)
     else:
         train_util.save_model(glide_model, checkpoints_dir, train_idx, epoch)

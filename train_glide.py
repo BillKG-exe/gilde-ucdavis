@@ -167,6 +167,7 @@ def run_glide_finetune(
     existing_runs_int = sorted(existing_runs_int)
     next_run = 0 if len(existing_runs) == 0 else existing_runs_int[-1] + 1
     current_run_ckpt_dir = os.path.join(checkpoints_dir, str(next_run).zfill(4))
+    best_models_ckpt_dir = os.path.join(current_run_ckpt_dir, 'best_models')
 
     os.makedirs(current_run_ckpt_dir, exist_ok=True)
 

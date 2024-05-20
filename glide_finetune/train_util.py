@@ -37,7 +37,11 @@ def pil_image_to_norm_tensor(pil_image):
     """
     Convert a PIL image to a PyTorch tensor normalized to [-1, 1] with shape [B, C, H, W].
     """
-    return th.from_numpy(np.asarray(pil_image)).float().permute(2, 0, 1) / 127.5 - 1.0
+    np_image = np.asarray(pil_image)
+    if not np_image.flags['WRITEABLE']:
+        np_image = np.copy(np_image)
+        
+    return th.from_numpy(np_image).float().permute(2, 0, 1) / 127.5 - 1.0
 
 
 def resize_for_upsample(
